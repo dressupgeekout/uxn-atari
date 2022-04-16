@@ -38,6 +38,7 @@ static UxnAudio uxn_audio[POLYPHONY];
 static Sint32
 envelope(UxnAudio *c, Uint32 age)
 {
+#if 0 /* CHARLOTTE */
 	if(!c->r) return 0x0888;
 	if(age < c->a) return 0x0888 * age / c->a;
 	if(age < c->d) return 0x0444 * (2 * c->d - c->a - age) / (c->d - c->a);
@@ -45,11 +46,13 @@ envelope(UxnAudio *c, Uint32 age)
 	if(age < c->r) return 0x0444 * (c->r - age) / (c->r - c->s);
 	c->advance = 0;
 	return 0x0000;
+#endif
 }
 
 int
 audio_render(int instance, Sint16 *sample, Sint16 *end)
 {
+#if 0 /* CHARLOTTE */
 	UxnAudio *c = &uxn_audio[instance];
 	Sint32 s;
 	if(!c->advance || !c->period) return 0;
@@ -70,11 +73,13 @@ audio_render(int instance, Sint16 *sample, Sint16 *end)
 	}
 	if(!c->advance) audio_finished_handler(instance);
 	return 1;
+#endif
 }
 
 void
 audio_start(int instance, Device *d)
 {
+#if 0 /* CHARLOTTE */
 	UxnAudio *c = &uxn_audio[instance];
 	Uint16 addr, adsr;
 	Uint8 pitch;
@@ -104,11 +109,13 @@ audio_start(int instance, Device *d)
 		c->period = NOTE_PERIOD * 337 / 2 / c->len;
 	else /* sample repeat mode */
 		c->period = NOTE_PERIOD;
+#endif
 }
 
 Uint8
 audio_get_vu(int instance)
 {
+#if 0 /* CHARLOTTE */
 	UxnAudio *c = &uxn_audio[instance];
 	int i;
 	Sint32 sum[2] = {0, 0};
@@ -119,11 +126,14 @@ audio_get_vu(int instance)
 		if(sum[i] > 0xf) sum[i] = 0xf;
 	}
 	return (sum[0] << 4) | sum[1];
+#endif
 }
 
 Uint16
 audio_get_position(int instance)
 {
+#if 0 /* CHARLOTTE */
 	UxnAudio *c = &uxn_audio[instance];
 	return c->i;
+#endif
 }

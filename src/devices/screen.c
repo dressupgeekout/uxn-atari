@@ -27,6 +27,7 @@ static Uint8 blending[5][16] = {
 static void
 screen_write(UxnScreen *p, Layer *layer, Uint16 x, Uint16 y, Uint8 color)
 {
+#if 0 /* CHARLOTTE */
 	if(x < p->width && y < p->height) {
 		Uint32 i = x + y * p->width;
 		if(color != layer->pixels[i]) {
@@ -34,11 +35,13 @@ screen_write(UxnScreen *p, Layer *layer, Uint16 x, Uint16 y, Uint8 color)
 			layer->changed = 1;
 		}
 	}
+#endif
 }
 
 static void
 screen_blit(UxnScreen *p, Layer *layer, Uint16 x, Uint16 y, Uint8 *sprite, Uint8 color, Uint8 flipx, Uint8 flipy, Uint8 twobpp)
 {
+#if 0 /* CHARLOTTE */
 	int v, h, opaque = blending[4][color];
 	for(v = 0; v < 8; v++) {
 		Uint16 c = sprite[v] | (twobpp ? sprite[v + 8] : 0) << 8;
@@ -52,11 +55,13 @@ screen_blit(UxnScreen *p, Layer *layer, Uint16 x, Uint16 y, Uint8 *sprite, Uint8
 					blending[ch][color]);
 		}
 	}
+#endif
 }
 
 void
 screen_palette(UxnScreen *p, Uint8 *addr)
 {
+#if 0 /* CHARLOTTE */
 	int i, shift;
 	for(i = 0, shift = 4; i < 4; ++i, shift ^= 4) {
 		Uint8
@@ -67,11 +72,13 @@ screen_palette(UxnScreen *p, Uint8 *addr)
 		p->palette[i] |= p->palette[i] << 4;
 	}
 	p->fg.changed = p->bg.changed = 1;
+#endif
 }
 
 void
 screen_resize(UxnScreen *p, Uint16 width, Uint16 height)
 {
+#if 0 /* CHARLOTTE */
 	Uint8
 		*bg = realloc(p->bg.pixels, width * height),
 		*fg = realloc(p->fg.pixels, width * height);
@@ -86,32 +93,39 @@ screen_resize(UxnScreen *p, Uint16 width, Uint16 height)
 		screen_clear(p, &p->bg);
 		screen_clear(p, &p->fg);
 	}
+#endif
 }
 
 void
 screen_clear(UxnScreen *p, Layer *layer)
 {
+#if 0 /* CHARLOTTE */
 	Uint32 i, size = p->width * p->height;
 	for(i = 0; i < size; i++)
 		layer->pixels[i] = 0x00;
 	layer->changed = 1;
+#endif
 }
 
 void
 screen_redraw(UxnScreen *p, Uint32 *pixels)
 {
+#if 0 /* CHARLOTTE */
 	Uint32 i, size = p->width * p->height, palette[16];
 	for(i = 0; i < 16; i++)
 		palette[i] = p->palette[(i >> 2) ? (i >> 2) : (i & 3)];
 	for(i = 0; i < size; i++)
 		pixels[i] = palette[p->fg.pixels[i] << 2 | p->bg.pixels[i]];
 	p->fg.changed = p->bg.changed = 0;
+#endif
 }
 
 int
 clamp(int val, int min, int max)
 {
+#if 0 /* CHARLOTTE */
 	return (val >= min) ? (val <= max) ? val : max : min;
+#endif
 }
 
 /* IO */
@@ -119,6 +133,7 @@ clamp(int val, int min, int max)
 Uint8
 screen_dei(Device *d, Uint8 port)
 {
+#if 0 /* CHARLOTTE */
 	switch(port) {
 	case 0x2: return uxn_screen.width >> 8;
 	case 0x3: return uxn_screen.width;
@@ -126,11 +141,13 @@ screen_dei(Device *d, Uint8 port)
 	case 0x5: return uxn_screen.height;
 	default: return d->dat[port];
 	}
+#endif
 }
 
 void
 screen_deo(Device *d, Uint8 port)
 {
+#if 0 /* CHARLOTTE */
 	switch(port) {
 	case 0x3:
 		if(!FIXED_SIZE) {
@@ -178,4 +195,5 @@ screen_deo(Device *d, Uint8 port)
 		break;
 	}
 	}
+#endif
 }

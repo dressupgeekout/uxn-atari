@@ -16,37 +16,45 @@ WITH REGARD TO THIS SOFTWARE.
 void
 controller_down(Device *d, Uint8 mask)
 {
+#if 0 /* CHARLOTTE */
 	if(mask) {
 		d->dat[2] |= mask;
 		uxn_eval(d->u, GETVECTOR(d));
 	}
+#endif
 }
 
 void
 controller_up(Device *d, Uint8 mask)
 {
+#if 0 /* CHARLOTTE */
 	if(mask) {
 		d->dat[2] &= (~mask);
 		uxn_eval(d->u, GETVECTOR(d));
 	}
+#endif
 }
 
 void
 controller_key(Device *d, Uint8 key)
 {
+#if 0 /* CHARLOTTE */
 	if(key) {
 		d->dat[3] = key;
 		uxn_eval(d->u, GETVECTOR(d));
 		d->dat[3] = 0x00;
 	}
+#endif
 }
 
 void
 controller_special(Device *d, Uint8 key)
 {
+#if 0 /* CHARLOTTE */
 	if(key) {
 		d->dat[4] = key;
 		uxn_eval(d->u, GETVECTOR(d));
 		d->dat[4] = 0x00;
 	}
+#endif
 }
