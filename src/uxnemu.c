@@ -4,11 +4,7 @@
 
 #include "uxn.h"
 
-#pragma GCC diagnostic push
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wpedantic"
-#pragma clang diagnostic ignored "-Wtypedef-redefinition"
-#include <SDL.h>
+//#include <SDL.h>
 #include "devices/system.h"
 #include "devices/screen.h"
 #include "devices/audio.h"
@@ -16,11 +12,6 @@
 #include "devices/controller.h"
 #include "devices/mouse.h"
 #include "devices/datetime.h"
-#ifdef _WIN32
-#include <processthreadsapi.h>
-#endif
-#pragma GCC diagnostic pop
-#pragma clang diagnostic pop
 
 /*
 Copyright (c) 2021 Devine Lu Linvega
@@ -38,12 +29,12 @@ WITH REGARD TO THIS SOFTWARE.
 #define PAD 4
 #define TIMEOUT_FRAMES 10
 
-static SDL_Window *gWindow;
-static SDL_Texture *gTexture;
-static SDL_Renderer *gRenderer;
-static SDL_AudioDeviceID audio_id;
-static SDL_Rect gRect;
-static SDL_Thread *stdin_thread;
+//static SDL_Window *gWindow;
+//static SDL_Texture *gTexture;
+//static SDL_Renderer *gRenderer;
+//static SDL_AudioDeviceID audio_id;
+//static SDL_Rect gRect;
+//static SDL_Thread *stdin_thread;
 
 /* devices */
 
@@ -511,12 +502,7 @@ main(int argc, char **argv)
 	if(!loaded && !start(&u, "launcher.rom"))
 		return error("usage", "uxnemu [-s scale] file.rom");
 	run(&u);
-#ifdef _WIN32
-#pragma GCC diagnostic ignored "-Wint-to-pointer-cast"
-	TerminateThread((HANDLE)SDL_GetThreadID(stdin_thread), 0);
-#else
 	close(0); /* make stdin thread exit */
-#endif
 	SDL_Quit();
 	return 0;
 }
