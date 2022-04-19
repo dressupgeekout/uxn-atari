@@ -18,15 +18,15 @@ UXNCLI_SRCS+=	src/uxncli.c
 UXNCLI_SRCS+=	src/uxn.c
 
 UXNEMU_SRCS=	# defined
-UXNEMU_SRCS+=	src/uxn.c
-UXNEMU_SRCS+=	src/uxnemu.c
-UXNEMU_SRCS+=	src/devices/audio.c
-UXNEMU_SRCS+=	src/devices/controller.c
+#UXNEMU_SRCS+=	src/devices/audio.c
+#UXNEMU_SRCS+=	src/devices/controller.c
 UXNEMU_SRCS+=	src/devices/datetime.c
 UXNEMU_SRCS+=	src/devices/file.c
-UXNEMU_SRCS+=	src/devices/mouse.c
-UXNEMU_SRCS+=	src/devices/screen.c
+#UXNEMU_SRCS+=	src/devices/mouse.c
+#UXNEMU_SRCS+=	src/devices/screen.c
 UXNEMU_SRCS+=	src/devices/system.c
+UXNEMU_SRCS+=	src/uxnatari.c
+UXNEMU_SRCS+=	src/uxn.c
 
 .PHONY: all
 all: $(UXNASM) $(UXNCLI) $(UXNEMU)
@@ -44,5 +44,5 @@ $(UXNCLI): $(UXNCLI_SRCS)
 	$(CROSS_STRIP) $@
 
 $(UXNEMU): $(UXNEMU_SRCS)
-	$(CROSS_CC) -o $@ $^
+	$(CROSS_CC) -o $@ $^ -lgem
 	$(CROSS_STRIP) $@

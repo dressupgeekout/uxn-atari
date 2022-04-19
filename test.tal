@@ -1,0 +1,32 @@
+( charlotte's test program! )
+
+|00 @System
+  &vector $2
+  &wst $1
+  &rst $1
+  &__skip__ $4
+  &red $2
+  &green $2
+  &blue $2
+  &debug $1
+  &state $1
+
+|10 @Console
+  &vector $2
+  &read $1
+  &__skip__ $5
+  &write $1
+  &error $1
+
+( ---------- )
+
+|0100 ( main )
+
+#01 .System/debug DEO
+
+#41 .Console/write DEO ( 'A' )
+#0a .Console/write DEO ( '\n' )
+
+#01 .System/state DEO ( halt )
+
+BRK
